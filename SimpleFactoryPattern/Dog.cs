@@ -8,13 +8,14 @@ namespace DesignPatternsInC_Sharp.SimpleFactoryPattern
 {
     public class Dog : IAnimal
     {
-        public void Speak(HttpContext httpContext)
+        public HttpContext _httpContext => new HttpContextAccessor().HttpContext;
+        public void Speak()
         {
-            HttpResponseWritingExtensions.WriteAsync(httpContext.Response, "Dog says: Bow-Wow...\n");
+            _httpContext.Response.WriteAsync("Dog says: Bow-Wow...\n");
         }
-        public void Action(HttpContext httpContext)
+        public void Action()
         {
-            HttpResponseWritingExtensions.WriteAsync(httpContext.Response, "Dogs prefer barking...\n");
+            _httpContext.Response.WriteAsync("Dogs prefer barking...\n\n");
         }
     }
 }

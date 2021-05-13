@@ -20,7 +20,7 @@ namespace DesignPatternsInC_Sharp.SimpleFactoryPattern
                     intendedAnimal = new Tiger();
                     break;
                 default:
-                    //WriteAsync("You must enter either 0 or 1");                    
+                    //WriteAsync("Choice must be either 0 or 1");                    
                     //We'll throw a runtime exception for any other choices.
                     throw new ApplicationException(String.Format(" Unknown Animal cannot be instantiated"));
             }

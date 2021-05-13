@@ -8,7 +8,7 @@ namespace DesignPatternsInC_Sharp.SimpleFactoryPattern
 {
     public interface IAnimal
     {
-        void Speak(HttpContext httpContext);
-        void Action(HttpContext httpContext);
+        void Speak();
+        void Action();
     }
 }
