@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DesignPatternsInC_Sharp.FactoryMethodPattern;
-using DesignPatternsInC_Sharp.SimpleFactoryPattern;
+using DesignPatternsInC_Sharp.AbstractFactoryPattern;
+//using DesignPatternsInC_Sharp.FactoryMethodPattern;
+//using DesignPatternsInC_Sharp.SimpleFactoryPattern;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +36,7 @@ namespace DesignPatternsInC_Sharp
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    #region Uncomment this region to check TechWebDots: Simple Factory Pattern Demo
+                    #region Uncomment this region to check TechWebDots: Simple Factory Pattern Demo & Include SimpleFactoryPattern namaspace
                     //await context.Response.WriteAsync("*** TechWebDots: Simple Factory Pattern Demo***\n\n");
                     //IAnimal preferredType = null;
                     //ISimpleFactory simpleFactory = new SimpleFactory();
@@ -51,19 +52,38 @@ namespace DesignPatternsInC_Sharp
                     //#endregion
                     #endregion
 
-                    #region Uncomment this region to check TechWebDots: Factory Method Design Pattern Demo
+                    #region Uncomment this region to check TechWebDots: Factory Method Design Pattern Demo, Include SimpleFactoryPattern & FactoryMethodPattern namaspace
+                    //await context.Response.WriteAsync("*** TechWebDots: Factory Method Design Pattern Demo***\n\n");
+                    //IAnimalFactory dogFactory = new DogFactory();
+                    //#region The code region that will vary based on userspreference
+                    //await context.Response.WriteAsync("Dog Factory can create only Dog Animals!\n\n");
+                    //IAnimal aDog = dogFactory.MakeAnimal();
+                    ////IAnimal aDog = dogFactory.CreateAnimal();
+                    //#endregion
+                    //await context.Response.WriteAsync("Dog Animal created and Getting Dog Animal Features!\n\n");
+                    //#region The codes that do not change frequently
+                    ////aDog.Speak();
+                    ////aDog.Action();
+                    //#endregion
+                    #endregion
+
+                    #region Uncomment this region to check TechWebDots: Abstract Factory Design Pattern Demo & Include only AbstractFactoryPattern namaspace
                     await context.Response.WriteAsync("*** TechWebDots: Factory Method Design Pattern Demo***\n\n");
-                    IAnimalFactory dogFactory = new DogFactory();
-                    #region The code region that will vary based on userspreference
-                    await context.Response.WriteAsync("Dog Factory can create only Dog Animals!\n\n");
-                    IAnimal aDog = dogFactory.MakeAnimal();
-                    //IAnimal aDog = dogFactory.CreateAnimal();
-                    #endregion
-                    await context.Response.WriteAsync("Dog Animal created and Getting Dog Animal Features!\n\n");
-                    #region The codes that do not change frequently
-                    //aDog.Speak();
-                    //aDog.Action();
-                    #endregion
+
+                    await context.Response.WriteAsync("*** TechWebDots: Making a wild tiger through WildAnimalFactory ***\n\n");
+                    //Making a wild tiger through WildAnimalFactory
+                    IAnimalFactory wildAnimalFactory = new WildAnimalFactory();
+                    ITiger wildTiger = wildAnimalFactory.GetTiger();
+                    wildTiger.Speak();
+                    wildTiger.Action();
+
+                    await context.Response.WriteAsync("*** TechWebDots: Making a pet dog through PetAnimalFactory ***\n\n");
+                    //Making a pet dog through PetAnimalFactory
+                    IAnimalFactory petAnimalFactory = new PetAnimalFactory();
+                    IDog petDog = petAnimalFactory.GetDog();
+                    petDog.Speak();
+                    petDog.Action();
+                    
                     #endregion
                     await context.Response.WriteAsync("\n");
 
