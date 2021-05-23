@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DesignPatternsInC_Sharp.AbstractFactoryPattern;
-using DesignPatternsInC_Sharp.SingletonPattern;
-//using DesignPatternsInC_Sharp.FactoryMethodPattern;
-//using DesignPatternsInC_Sharp.SimpleFactoryPattern;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DesignPatternsInC_Sharp.ObserverPattern;
+//using DesignPatternsInC_Sharp.AbstractFactoryPattern;
+//using DesignPatternsInC_Sharp.SingletonPattern;
+//using DesignPatternsInC_Sharp.FactoryMethodPattern;
+//using DesignPatternsInC_Sharp.SimpleFactoryPattern;
+
 
 namespace DesignPatternsInC_Sharp
 {
@@ -88,21 +86,45 @@ namespace DesignPatternsInC_Sharp
                     #endregion
 
                     #region Comment all except this region to check Singleton Pattern Demo & Include SingletonPattern namaspace only
-                    await context.Response.WriteAsync("***Singleton Pattern Demo***\n\n");                    
-                    await context.Response.WriteAsync("Trying to create instance s1.\n\n");
-                    Singleton s1 = Singleton.Instance;
-                    await context.Response.WriteAsync("Trying to create instance s2.\n\n");
-                    Singleton s2 = Singleton.Instance;
-                    if (s1 == s2)
-                    {
-                        await context.Response.WriteAsync("Only one instance exists.\n\n");
-                    }
-                    else
-                    {
-                        await context.Response.WriteAsync("Different instances exist.\n\n");
-                    }
-                    await context.Response.WriteAsync("***Thread-Safe Singleton Pattern Demo***\n\n");
-                    SingletonTS sts = SingletonTS.Instance;
+                    //await context.Response.WriteAsync("***Singleton Pattern Demo***\n\n");                    
+                    //await context.Response.WriteAsync("Trying to create instance s1.\n\n");
+                    //Singleton s1 = Singleton.Instance;
+                    //await context.Response.WriteAsync("Trying to create instance s2.\n\n");
+                    //Singleton s2 = Singleton.Instance;
+                    //if (s1 == s2)
+                    //{
+                    //    await context.Response.WriteAsync("Only one instance exists.\n\n");
+                    //}
+                    //else
+                    //{
+                    //    await context.Response.WriteAsync("Different instances exist.\n\n");
+                    //}
+                    //await context.Response.WriteAsync("***Thread-Safe Singleton Pattern Demo***\n\n");
+                    //SingletonTS sts = SingletonTS.Instance;
+                    #endregion
+
+                    #region Comment all except this region to check observer Pattern Demo & Include ObserverPattern namaspace only
+                    await context.Response.WriteAsync("***Observer Pattern Demo***\n");
+                    //We have 3 observers-2 of them are ObserverType1, 1 of them is of ObserverType2
+                    IObserver myObserver1 = new ObserverType1("DB Subscriber 1");
+                    IObserver myObserver2 = new ObserverType1("DB Subscriber 2");
+                    IObserver myObserver3 = new ObserverType2("DB Subscriber 3");
+                    Subject subject = new Subject();
+                    //Registering the observers-DB Users
+                    subject.Register(myObserver1);
+                    subject.Register(myObserver2);
+                    subject.Register(myObserver3);
+                    await context.Response.WriteAsync("Updating Flag = 5 \n");
+                    subject.Flag = 5;
+                    //Unregistering an observer(DB Subscriber 1))
+                    subject.Unregister(myObserver1);
+                    //No notification this time DB Subscriber 1. Since it is unregistered.
+                    await context.Response.WriteAsync("\nUpdating Flag = 50 \n");
+                    subject.Flag = 50;
+                    //DB Subscriber 1 is registering himself again
+                    subject.Register(myObserver1);
+                    await context.Response.WriteAsync("\nUpdating Flag = 100 \n");
+                    subject.Flag = 100;
                     #endregion
                     await context.Response.WriteAsync("\n");
 
