@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DesignPatternsInC_Sharp.ObserverPattern;
+using DesignPatternsInC_Sharp.StrategyPattern;
 //using DesignPatternsInC_Sharp.AbstractFactoryPattern;
 //using DesignPatternsInC_Sharp.SingletonPattern;
 //using DesignPatternsInC_Sharp.FactoryMethodPattern;
@@ -104,30 +105,58 @@ namespace DesignPatternsInC_Sharp
                     #endregion
 
                     #region Comment all except this region to check observer Pattern Demo & Include ObserverPattern namaspace only
-                    await context.Response.WriteAsync("***Observer Pattern Demo***\n");
-                    //We have 3 observers-2 of them are ObserverType1, 1 of them is of ObserverType2
-                    IObserver myObserver1 = new ObserverType1("DB Subscriber 1");
-                    IObserver myObserver2 = new ObserverType1("DB Subscriber 2");
-                    IObserver myObserver3 = new ObserverType2("DB Subscriber 3");
-                    Subject subject = new Subject();
-                    //Registering the observers-DB Users
-                    subject.Register(myObserver1);
-                    subject.Register(myObserver2);
-                    subject.Register(myObserver3);
-                    await context.Response.WriteAsync("Updating Flag = 5 \n");
-                    subject.Flag = 5;
-                    //Unregistering an observer(DB Subscriber 1))
-                    subject.Unregister(myObserver1);
-                    //No notification this time DB Subscriber 1. Since it is unregistered.
-                    await context.Response.WriteAsync("\nUpdating Flag = 50 \n");
-                    subject.Flag = 50;
-                    //DB Subscriber 1 is registering himself again
-                    subject.Register(myObserver1);
-                    await context.Response.WriteAsync("\nUpdating Flag = 100 \n");
-                    subject.Flag = 100;
+                    //await context.Response.WriteAsync("***Observer Pattern Demo***\n");
+                    ////We have 3 observers-2 of them are ObserverType1, 1 of them is of ObserverType2
+                    //IObserver myObserver1 = new ObserverType1("DB Subscriber 1");
+                    //IObserver myObserver2 = new ObserverType1("DB Subscriber 2");
+                    //IObserver myObserver3 = new ObserverType2("DB Subscriber 3");
+                    //Subject subject = new Subject();
+                    ////Registering the observers-DB Users
+                    //subject.Register(myObserver1);
+                    //subject.Register(myObserver2);
+                    //subject.Register(myObserver3);
+                    //await context.Response.WriteAsync("Updating Flag = 5 \n");
+                    //subject.Flag = 5;
+                    ////Unregistering an observer(DB Subscriber 1))
+                    //subject.Unregister(myObserver1);
+                    ////No notification this time DB Subscriber 1. Since it is unregistered.
+                    //await context.Response.WriteAsync("\nUpdating Flag = 50 \n");
+                    //subject.Flag = 50;
+                    ////DB Subscriber 1 is registering himself again
+                    //subject.Register(myObserver1);
+                    //await context.Response.WriteAsync("\nUpdating Flag = 100 \n");
+                    //subject.Flag = 100;
+                    #endregion
+
+                    #region Comment all except this region to check strategy Pattern Demo & Include StrategyPattern namaspace only                    
+                    await context.Response.WriteAsync("***Strategy Design Pattern Demo***\n");
+                    IChoice ic = null;
+                    Context cxt = new Context();
+                    //For simplicity, we are considering 2 user inputs only.
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        await context.Response.WriteAsync("\n======================================\n");
+                        await context.Response.WriteAsync("\nEnter ur choice(1 or 2)");
+                        await context.Response.WriteAsync(string.Format("\nUser Enters {0}\n",i));
+                        string c = i.ToString();
+                        
+                        if (c.Equals("1"))
+                        {
+                            ic = new FirstChoice();
+                            await context.Response.WriteAsync("\nFirstChoice object selected\n");
+                        }
+                        else
+                        {
+                            ic = new SecondChoice();
+                            await context.Response.WriteAsync("\nSecondChoice object selected\n");
+                        }
+                        cxt.SetChoice(ic);
+                        await context.Response.WriteAsync("\nContext set with User seleted Choice object\n");
+
+                        cxt.ShowChoice();
+                    }
                     #endregion
                     await context.Response.WriteAsync("\n");
-
                 });
             });
         }
