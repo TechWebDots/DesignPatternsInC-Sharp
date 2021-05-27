@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DesignPatternsInC_Sharp.ObserverPattern;
+//using DesignPatternsInC_Sharp.ObserverPattern;
 using DesignPatternsInC_Sharp.StrategyPattern;
+using DesignPatternsInC_Sharp.AdapterPattern;
 //using DesignPatternsInC_Sharp.AbstractFactoryPattern;
 //using DesignPatternsInC_Sharp.SingletonPattern;
 //using DesignPatternsInC_Sharp.FactoryMethodPattern;
@@ -129,33 +130,53 @@ namespace DesignPatternsInC_Sharp
                     #endregion
 
                     #region Comment all except this region to check strategy Pattern Demo & Include StrategyPattern namaspace only                    
-                    await context.Response.WriteAsync("***Strategy Design Pattern Demo***\n");
-                    IChoice ic = null;
-                    Context cxt = new Context();
-                    //For simplicity, we are considering 2 user inputs only.
-                    for (int i = 1; i <= 2; i++)
-                    {
-                        await context.Response.WriteAsync("\n======================================\n");
-                        await context.Response.WriteAsync("\nEnter ur choice(1 or 2)");
-                        await context.Response.WriteAsync(string.Format("\nUser Enters {0}\n",i));
-                        string c = i.ToString();
+                    //await context.Response.WriteAsync("***Strategy Design Pattern Demo***\n");
+                    //IChoice ic = null;
+                    //Context cxt = new Context();
+                    ////For simplicity, we are considering 2 user inputs only.
+                    //for (int i = 1; i <= 2; i++)
+                    //{
+                    //    await context.Response.WriteAsync("\n======================================\n");
+                    //    await context.Response.WriteAsync("\nEnter ur choice(1 or 2)");
+                    //    await context.Response.WriteAsync(string.Format("\nUser Enters {0}\n",i));
+                    //    string c = i.ToString();
                         
-                        if (c.Equals("1"))
-                        {
-                            ic = new FirstChoice();
-                            await context.Response.WriteAsync("\nFirstChoice object selected\n");
-                        }
-                        else
-                        {
-                            ic = new SecondChoice();
-                            await context.Response.WriteAsync("\nSecondChoice object selected\n");
-                        }
-                        cxt.SetChoice(ic);
-                        await context.Response.WriteAsync("\nContext set with User seleted Choice object\n");
+                    //    if (c.Equals("1"))
+                    //    {
+                    //        ic = new FirstChoice();
+                    //        await context.Response.WriteAsync("\nFirstChoice object selected\n");
+                    //    }
+                    //    else
+                    //    {
+                    //        ic = new SecondChoice();
+                    //        await context.Response.WriteAsync("\nSecondChoice object selected\n");
+                    //    }
+                    //    cxt.SetChoice(ic);
+                    //    await context.Response.WriteAsync("\nContext set with User seleted Choice object\n");
 
-                        cxt.ShowChoice();
+                    //    cxt.ShowChoice();
+                    //}
+                    #endregion
+
+                    #region Comment all except this region to check Adapter Pattern Demo & Include AdapterPattern namaspace only                    
+                    await context.Response.WriteAsync("***Adapter Design Pattern Demo***\n");
+                    //CalculatorAdapter cal = new CalculatorAdapter();
+                    Rect r = new Rect(20, 10);
+                    await context.Response.WriteAsync(string.Format("\nArea of Rectangle is :{0} Square unit",r.CalculateAreaOfRectangle()));
+                    Triangle t = new Triangle(20, 10);
+                    await context.Response.WriteAsync(string.Format("\nArea of Triangle without Adapter is :{0} Square unit", t.CalculateAreaOfTriangle()));
+                    IRect adapter = new TriangleAdapter(t);
+                    //Passing a Triangle instead of a Rectangle
+                    await context.Response.WriteAsync(string.Format("\nArea of Triangle with Triangle Adapter is :{0} Square unit", GetArea(adapter)));
+
+                    /*GetArea(IRect r) method does not know that through TriangleAdapter, it is getting a Triangle instead of a Rectangle*/
+                    static double GetArea(IRect r)
+                    {
+                        r.AboutRectangle();
+                        return r.CalculateAreaOfRectangle();
                     }
                     #endregion
+
                     await context.Response.WriteAsync("\n");
                 });
             });
