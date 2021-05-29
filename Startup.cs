@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 //using DesignPatternsInC_Sharp.ObserverPattern;
 using DesignPatternsInC_Sharp.StrategyPattern;
 using DesignPatternsInC_Sharp.AdapterPattern;
+using DesignPatternsInC_Sharp.BridgePattern;
 //using DesignPatternsInC_Sharp.AbstractFactoryPattern;
 //using DesignPatternsInC_Sharp.SingletonPattern;
 //using DesignPatternsInC_Sharp.FactoryMethodPattern;
@@ -140,7 +141,7 @@ namespace DesignPatternsInC_Sharp
                     //    await context.Response.WriteAsync("\nEnter ur choice(1 or 2)");
                     //    await context.Response.WriteAsync(string.Format("\nUser Enters {0}\n",i));
                     //    string c = i.ToString();
-                        
+
                     //    if (c.Equals("1"))
                     //    {
                     //        ic = new FirstChoice();
@@ -159,24 +160,46 @@ namespace DesignPatternsInC_Sharp
                     #endregion
 
                     #region Comment all except this region to check Adapter Pattern Demo & Include AdapterPattern namaspace only                    
-                    await context.Response.WriteAsync("***Adapter Design Pattern Demo***\n");
-                    //CalculatorAdapter cal = new CalculatorAdapter();
-                    Rect r = new Rect(20, 10);
-                    await context.Response.WriteAsync(string.Format("\nArea of Rectangle is :{0} Square unit",r.CalculateAreaOfRectangle()));
-                    Triangle t = new Triangle(20, 10);
-                    await context.Response.WriteAsync(string.Format("\nArea of Triangle without Adapter is :{0} Square unit", t.CalculateAreaOfTriangle()));
-                    IRect adapter = new TriangleAdapter(t);
-                    //Passing a Triangle instead of a Rectangle
-                    await context.Response.WriteAsync(string.Format("\nArea of Triangle with Triangle Adapter is :{0} Square unit", GetArea(adapter)));
+                    //await context.Response.WriteAsync("***Adapter Design Pattern Demo***\n");
+                    ////CalculatorAdapter cal = new CalculatorAdapter();
+                    //Rect r = new Rect(20, 10);
+                    //await context.Response.WriteAsync(string.Format("\nArea of Rectangle is :{0} Square unit",r.CalculateAreaOfRectangle()));
+                    //Triangle t = new Triangle(20, 10);
+                    //await context.Response.WriteAsync(string.Format("\nArea of Triangle without Adapter is :{0} Square unit", t.CalculateAreaOfTriangle()));
+                    //IRect adapter = new TriangleAdapter(t);
+                    ////Passing a Triangle instead of a Rectangle
+                    //await context.Response.WriteAsync(string.Format("\nArea of Triangle with Triangle Adapter is :{0} Square unit", GetArea(adapter)));
 
-                    /*GetArea(IRect r) method does not know that through TriangleAdapter, it is getting a Triangle instead of a Rectangle*/
-                    static double GetArea(IRect r)
-                    {
-                        r.AboutRectangle();
-                        return r.CalculateAreaOfRectangle();
-                    }
+                    ///*GetArea(IRect r) method does not know that through TriangleAdapter, it is getting a Triangle instead of a Rectangle*/
+                    //static double GetArea(IRect r)
+                    //{
+                    //    r.AboutRectangle();
+                    //    return r.CalculateAreaOfRectangle();
+                    //}
                     #endregion
 
+                    #region Comment all except this region to check Bridge Pattern Demo & Include BridgePattern namaspace only                    
+                    await context.Response.WriteAsync("***Bridge Design Pattern Demo***\n");
+                    await context.Response.WriteAsync("\nDealing with a Television:");
+                    //ElectronicGoods eItem = new Television(presentState);                    
+                    IState presentState = new OnState();
+                    ElectronicGoods eItem = new Television();
+                    eItem.State = presentState;
+                    eItem.MoveToCurrentState();
+                    //Verifying Off state of the Television now
+                    presentState = new OffState();
+                    eItem.State = presentState;
+                    eItem.MoveToCurrentState();
+                    await context.Response.WriteAsync("==========================================\n");
+                    await context.Response.WriteAsync("\n\nDealing with a DVD:");
+                    presentState = new OnState();
+                    eItem = new DVD();
+                    eItem.State = presentState;
+                    eItem.MoveToCurrentState();
+                    presentState = new OffState();
+                    eItem.State = presentState;
+                    eItem.MoveToCurrentState();                    
+                    #endregion
                     await context.Response.WriteAsync("\n");
                 });
             });
