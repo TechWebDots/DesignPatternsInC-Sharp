@@ -10,41 +10,45 @@ namespace DesignPatternsInC_Sharp.OopsBasics
         //fields
         private string colour;
         private string yoM;
-
         //constructor
         public Car()
         {
             Colour = "Red";
             YoM = "2021";
-
-            //local variable
-            int counter = 0;
-        }
-                
+        }                
         //properties
         public string Colour
         {
-            get => colour;
-            set => colour = value;
+            get{
+                return colour;
+            }
+            set{
+                value = colour;
+            }
         }
         public string YoM
         {
-            get => yoM;
-            set => yoM = value;
+            get
+            {
+                return yoM;
+            }
+            set
+            {
+                value = yoM;
+            }
         }
-
         //methods
         public void Start()
         {
             //local variable
-            int counter = 0;
+            string c = colour;
             Console.WriteLine("Car Start!");
         }
         public void Stop()
         {
+            string y = yoM;
             Console.WriteLine("Car Stop!");
         }
-
     }
 
     static class SampleClass
