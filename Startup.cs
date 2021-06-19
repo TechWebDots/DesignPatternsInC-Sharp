@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using DesignPatternsInC_Sharp.StrategyPattern;
 using DesignPatternsInC_Sharp.AdapterPattern;
 using DesignPatternsInC_Sharp.BridgePattern;
+using DesignPatternsInC_Sharp.BuilderPattern;
 //using DesignPatternsInC_Sharp.AbstractFactoryPattern;
 //using DesignPatternsInC_Sharp.SingletonPattern;
 //using DesignPatternsInC_Sharp.FactoryMethodPattern;
@@ -179,26 +180,43 @@ namespace DesignPatternsInC_Sharp
                     #endregion
 
                     #region Comment all except this region to check Bridge Pattern Demo & Include BridgePattern namaspace only                    
-                    await context.Response.WriteAsync("***Bridge Design Pattern Demo***\n");
-                    await context.Response.WriteAsync("\nDealing with a Television:");
-                    //ElectronicGoods eItem = new Television(presentState);                    
-                    IState presentState = new OnState();
-                    ElectronicGoods eItem = new Television();
-                    eItem.State = presentState;
-                    eItem.MoveToCurrentState();
-                    //Verifying Off state of the Television now
-                    presentState = new OffState();
-                    eItem.State = presentState;
-                    eItem.MoveToCurrentState();
-                    await context.Response.WriteAsync("==========================================\n");
-                    await context.Response.WriteAsync("\n\nDealing with a DVD:");
-                    presentState = new OnState();
-                    eItem = new DVD();
-                    eItem.State = presentState;
-                    eItem.MoveToCurrentState();
-                    presentState = new OffState();
-                    eItem.State = presentState;
-                    eItem.MoveToCurrentState();                    
+                    //await context.Response.WriteAsync("***Bridge Design Pattern Demo***\n");
+                    //await context.Response.WriteAsync("\nDealing with a Television:");
+                    ////ElectronicGoods eItem = new Television(presentState);   
+                    //IState presentState = new OnState();
+                    //ElectronicGoods eItem = new Television();
+                    //eItem.State = presentState;
+                    //eItem.MoveToCurrentState();
+                    ////Verifying Off state of the Television now
+                    //presentState = new OffState();
+                    //eItem.State = presentState;
+                    //eItem.MoveToCurrentState();
+                    //await context.Response.WriteAsync("==========================================\n");
+                    //await context.Response.WriteAsync("\n\nDealing with a DVD:");
+                    //presentState = new OnState();
+                    //eItem = new DVD();
+                    //eItem.State = presentState;
+                    //eItem.MoveToCurrentState();
+                    //presentState = new OffState();
+                    //eItem.State = presentState;
+                    //eItem.MoveToCurrentState();
+                    #endregion
+
+                    #region Comment all except this region to check Builder Pattern Demo & Include BuilderPattern namaspace only                    
+                    await context.Response.WriteAsync("***Builder Design Pattern Demo***\n");
+                    Director director = new Director();
+                    IBuilder carBuilder = new Car("Ford");
+                    IBuilder motorCycleBuilder = new MotorCycle("Honda");
+                    
+                    // Making Car
+                    director.Construct(carBuilder);
+                    Product carProduct = carBuilder.GetVehicle();
+                    carProduct.Show();
+                    
+                    //Making MotorCycle
+                    director.Construct(motorCycleBuilder);
+                    Product motorCycleProduct = motorCycleBuilder.GetVehicle();
+                    motorCycleProduct.Show();
                     #endregion
                     await context.Response.WriteAsync("\n");
                 });
