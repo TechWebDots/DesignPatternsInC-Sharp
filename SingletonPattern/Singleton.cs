@@ -9,7 +9,7 @@ namespace DesignPatternsInC_Sharp.SingletonPattern
     public sealed class Singleton
     {
         public HttpResponse _response => new HttpContextAccessor().HttpContext.Response;
-        private static readonly Singleton instance = new Singleton();
+        private static Singleton instance;
         private int numberOfInstances = 0;
         //Private constructor is used to prevent creation of instances with 'new' keyword outside this class
         private Singleton()
@@ -22,6 +22,11 @@ namespace DesignPatternsInC_Sharp.SingletonPattern
         {
             get
             {
+                if (instance == null)
+                {
+                    instance = new Singleton(); 
+                    
+                }
                 return instance;
             }
         }
@@ -32,6 +37,7 @@ namespace DesignPatternsInC_Sharp.SingletonPattern
     public sealed class SingletonTS
     {
         public HttpResponse _response => new HttpContextAccessor().HttpContext.Response;
+        //private static readonly SingletonTS instance=new SingletonTS();
         //We are using volatile to ensure that assignment to the instance variable finishes before it’s access.
         private static volatile SingletonTS instance;
         private static object lockObject = new Object();

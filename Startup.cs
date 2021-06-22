@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 //using DesignPatternsInC_Sharp.ObserverPattern;
-using DesignPatternsInC_Sharp.StrategyPattern;
-using DesignPatternsInC_Sharp.AdapterPattern;
-using DesignPatternsInC_Sharp.BridgePattern;
-using DesignPatternsInC_Sharp.BuilderPattern;
+//using DesignPatternsInC_Sharp.StrategyPattern;
+//using DesignPatternsInC_Sharp.AdapterPattern;
+//using DesignPatternsInC_Sharp.BridgePattern;
 //using DesignPatternsInC_Sharp.AbstractFactoryPattern;
 //using DesignPatternsInC_Sharp.SingletonPattern;
 //using DesignPatternsInC_Sharp.FactoryMethodPattern;
 //using DesignPatternsInC_Sharp.SimpleFactoryPattern;
-
+using DesignPatternsInC_Sharp.BuilderPattern;
+using DesignPatternsInC_Sharp.PrototypePattern;
 
 namespace DesignPatternsInC_Sharp
 {
@@ -203,21 +203,39 @@ namespace DesignPatternsInC_Sharp
                     #endregion
 
                     #region Comment all except this region to check Builder Pattern Demo & Include BuilderPattern namaspace only                    
-                    await context.Response.WriteAsync("***Builder Design Pattern Demo***\n");
-                    Director director = new Director();
-                    IBuilder carBuilder = new Car("Ford");
-                    IBuilder motorCycleBuilder = new MotorCycle("Honda");
-                    
-                    // Making Car
-                    director.Construct(carBuilder);
-                    Product carProduct = carBuilder.GetVehicle();
-                    carProduct.Show();
-                    
-                    //Making MotorCycle
-                    director.Construct(motorCycleBuilder);
-                    Product motorCycleProduct = motorCycleBuilder.GetVehicle();
-                    motorCycleProduct.Show();
+                    //await context.Response.WriteAsync("***Builder Design Pattern Demo***\n");
+                    //Director director = new Director();
+                    //IBuilder carBuilder = new Car("Ford");
+                    //IBuilder motorCycleBuilder = new MotorCycle("Honda");
+
+                    //// Making Car
+                    //director.Construct(carBuilder);
+                    //Product carProduct = carBuilder.GetVehicle();
+                    //carProduct.Show();
+
+                    ////Making MotorCycle
+                    //director.Construct(motorCycleBuilder);
+                    //Product motorCycleProduct = motorCycleBuilder.GetVehicle();
+                    //motorCycleProduct.Show();
                     #endregion
+
+                    #region Comment all except this region to check Prototype Pattern Demo & Include PrototypePattern namaspace only                    
+                    await context.Response.WriteAsync("***Prototype Design Pattern Demo***\n");
+                    await context.Response.WriteAsync("************************************\n");
+                    //Base or Original Copy
+                    BasicCar nano_base = new Nano("Red Nano") { Price = 100000 };
+                    BasicCar ford_base = new Ford("Blue Ford") { Price = 500000 };
+                    BasicCar bc1;
+                    //Nano
+                    bc1 = nano_base.Clone();
+                    bc1.Price = nano_base.Price + BasicCar.SetPrice();
+                    await context.Response.WriteAsync(string.Format("\nCar is: {0}, and it's price is Rs. {1} ",bc1.ModelName,bc1.Price));
+                    //Ford
+                    bc1 = ford_base.Clone();
+                    bc1.Price = ford_base.Price + BasicCar.SetPrice();
+                    await context.Response.WriteAsync(string.Format("\nCar is: {0}, and it's price is Rs. {1}",bc1.ModelName, bc1.Price));
+                    #endregion
+
                     await context.Response.WriteAsync("\n");
                 });
             });
